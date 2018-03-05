@@ -17,6 +17,7 @@ contract Crowdsale is Ownable {
 
   // The token being sold
   ERC20 public token;
+  uint256 transactionNum;
 
   // start and end timestamps where investments are allowed (both inclusive)
   uint256 public startTime;
@@ -27,6 +28,7 @@ contract Crowdsale is Ownable {
 
   // how many token units a buyer gets per wei
   uint256 public rate;
+  uint256 public discountRate = 3333;
 
   // amount of raised money in wei
   uint256 public weiRaised;
@@ -65,9 +67,15 @@ contract Crowdsale is Ownable {
     require(validPurchase());
 
     uint256 weiAmount = msg.value;
+    uint256 tokens;
+    if(transactionNum < 100) {
+      tokens = weiAmount.mul(discountRate);
+    } else {
+      tokens = weiAmount.mul(rate);
+    }
 
-    // calculate token amount to be created
-    uint256 tokens = getTokenAmount(weiAmount);
+    transactionNum = transactionNum + 1;
+
 
     // update state
     weiRaised = weiRaised.add(weiAmount);
@@ -84,10 +92,6 @@ contract Crowdsale is Ownable {
   }
 
 
-  // Override this method to have a way to add business logic to your crowdsale when buying
-  function getTokenAmount(uint256 weiAmount) internal view returns(uint256) {
-    return weiAmount.mul(rate);
-  }
 
   // send ether to the fund collection wallet
   // override to create custom fund forwarding mechanisms

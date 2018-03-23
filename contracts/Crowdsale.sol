@@ -68,14 +68,7 @@ contract Crowdsale is Ownable {
 
     uint256 weiAmount = msg.value;
     uint256 tokens;
-    if(transactionNum < 100) {
-      tokens = weiAmount.mul(discountRate);
-    } else {
-      tokens = weiAmount.mul(rate);
-    }
-
-    transactionNum = transactionNum + 1;
-
+    tokens = weiAmount.mul(rate);
 
     // update state
     weiRaised = weiRaised.add(weiAmount);
@@ -102,7 +95,7 @@ contract Crowdsale is Ownable {
   // @return true if the transaction can buy tokens
   function validPurchase() internal view returns (bool) {
     bool withinPeriod = now >= startTime && now <= endTime;
-    bool nonZeroPurchase = msg.value != 0;
+    bool nonZeroPurchase = msg.value >= (1 ether);
     return withinPeriod && nonZeroPurchase;
   }
 

@@ -3,11 +3,11 @@ import "./Crowdsale.sol";
 import "zeppelin-solidity/contracts/math/SafeMath.sol";
 
 
-contract PreICO is Crowdsale {
+contract PrivateSale is Crowdsale {
   using SafeMath for uint256;
   uint256 public cap;
   bool public isFinalized;
-  function PreICO(uint256 _startTime, uint256 _endTime, uint256 _rate, uint256 _cap, address _wallet, address _token) public
+  function PrivateSale(uint256 _startTime, uint256 _endTime, uint256 _rate, uint256 _cap, address _wallet, address _token) public
   Crowdsale(_startTime, _endTime, _rate, _wallet, _token)
   {
       cap = _cap;

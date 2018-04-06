@@ -17,7 +17,7 @@ contract Crowdsale is Ownable {
 
   // The token being sold
   ERC20 public token;
-  uint256 transactionNum;
+  uint256 private transactionNum;
 
   // start and end timestamps where investments are allowed (both inclusive)
   uint256 public startTime;
